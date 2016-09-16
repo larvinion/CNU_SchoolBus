@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Collathon_SchoolBus.iml" filepath="$PROJECT_DIR$/Collathon_SchoolBus.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Collathon_SchoolBus.iml" filepath="$PROJECT_DIR$/.idea/Collathon_SchoolBus.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Collathon_SchoolBus.iml" filepath="$PROJECT_DIR$/Collathon_SchoolBus.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Collathon_SchoolBus.iml" filepath="$PROJECT_DIR$/Collathon_SchoolBus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/schoolbus/schoolbus.iml" filepath="$PROJECT_DIR$/schoolbus/schoolbus.iml" />
     </modules>
   </component>
 </project>
