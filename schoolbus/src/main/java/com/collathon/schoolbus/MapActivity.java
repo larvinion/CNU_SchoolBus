@@ -39,7 +39,7 @@ public class MapActivity extends NMapActivity {
 
         // create map view
         nMapView = new NMapView(this);
-        nMapLayout = (LinearLayout)findViewById(R.id.mapView); // Layout
+        nMapLayout = (LinearLayout)findViewById(R.id.nmap); // Layout
 
         // set a registered Client Id for Open MapViewer Library
         nMapView.setClientId(CLIENT_ID);
