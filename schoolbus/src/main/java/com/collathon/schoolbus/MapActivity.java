@@ -1,119 +1,143 @@
 package com.collathon.schoolbus;
 
 import android.os.Bundle;
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapView;
+import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.maps.overlay.NMapPOIdata;
+import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
+import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
+import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
 /**
  * Created by Larva on 2016-09-17.
  */
 public class MapActivity extends NMapActivity {
     private static final String LOG_TAG = "NMapViewer";
+    private static final boolean DEBUG = false;
 
     // set your Client ID which is registered for NMapViewer library.
     private static final String CLIENT_ID = "rN1VcLtqYSdvBmuyl0X1";
 
-    private MapContainerView mMapContainerView;
+    private NMapView mMapView;
+    private NMapController mMapController;
 
-    private NMapView nMapView;
-    private NMapController nMapController;
+    private LinearLayout mMapLayout;
 
-    private LinearLayout nMapLayout;
 
+    // create resource provider
+    public NMapResourceProvider mMapViewerResourceProvider;
+    // create overlay manager
     private NMapOverlayManager mOverlayManager;
 
-    private static boolean USE_XML_LAYOUT = false;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        InitNaverMap();
+        InitBusStopOverlay();
 
+    }
+
+    private void InitNaverMap() {
         // create map view
-        nMapView = new NMapView(this);
-        nMapLayout = (LinearLayout)findViewById(R.id.nmap); // Layout
+        mMapView = new NMapView(this);
+        mMapLayout = (LinearLayout)findViewById(R.id.nmap); // Layout
 
         // set a registered Client Id for Open MapViewer Library
-        nMapView.setClientId(CLIENT_ID);
+        mMapView.setClientId(CLIENT_ID);
 
         // set the activity content to the map view
-        setContentView(nMapView);
+        setContentView(mMapView);
 
         // initialize map view
-        nMapView.setClickable(true);
-        nMapView.setEnabled(true);
-        nMapView.setFocusable(true);
-        nMapView.setFocusableInTouchMode(true);
-        nMapView.requestFocus();
+        mMapView.setClickable(true);
+        mMapView.setEnabled(true);
+        mMapView.setFocusable(true);
+        mMapView.setFocusableInTouchMode(true);
+        mMapView.requestFocus();
 
-        nMapView.executeNaverMap();
+        // use map controller to zoom in/out, pan and set map center, zoom level etc.
+        mMapController = mMapView.getMapController();
     }
 
-    public void onMapInitHandler(NMapView arg0, NMapError errorInfo){
-        if(errorInfo == null){
-        }else{
-            android.util.Log.e("NMapViewer", "onMapInitHandler : error = " + errorInfo.toString());
+    private void InitBusStopOverlay() {
+        // create resource provider
+        mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
+
+        // create overlay manager
+        mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
+
+        int markerId = NMapPOIflagType.PIN;
+
+        // set POI data
+        NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
+        poiData.beginPOIdata(2);
+        poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
+        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+        poiData.endPOIdata();
+
+        // create POI data overlay
+        NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+
+        // show all POI data
+        poiDataOverlay.showAllPOIdata(0);
+
+        // set event listener to the overlay
+        poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+    }
+
+    public void onCalloutClick(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+        // [[TEMP]] handle a click event of the callout
+        Toast.makeText(MapActivity.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+    }
+
+    public void onFocusChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+        if (item != null) {
+            Log.i(LOG_TAG, "onFocusChanged: " + item.toString());
+        } else {
+            Log.i(LOG_TAG, "onFocusChanged: ");
         }
     }
 
-    /**
-     * Container view class to rotate map view.
-     */
-    private class MapContainerView extends ViewGroup {
+    public void onMapInitHandler(NMapView mapView, NMapError errorInfo) {
+        if (errorInfo == null) { // success
+            mMapController.setMapCenter(new NGeoPoint(126.978371, 37.5666091), 11);
+        } else { // fail
+            android.util.Log.e(LOG_TAG, "onMapInitHandler : error = " + errorInfo.toString());
+        }
+    }
 
-        public MapContainerView(Context context) {
-            super(context);
+    /* POI data State Change Listener*/
+    private final NMapPOIdataOverlay.OnStateChangeListener onPOIdataStateChangeListener = new NMapPOIdataOverlay.OnStateChangeListener() {
+
+        @Override
+        public void onCalloutClick(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+            if (DEBUG) {
+                Log.i(LOG_TAG, "onCalloutClick: title=" + item.getTitle());
+            }
+
+            // [[TEMP]] handle a click event of the callout
+            Toast.makeText(MapActivity.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
         }
 
         @Override
-        protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-            final int width = getWidth();
-            final int height = getHeight();
-            final int count = getChildCount();
-            for (int i = 0; i < count; i++) {
-                final View view = getChildAt(i);
-                final int childWidth = view.getMeasuredWidth();
-                final int childHeight = view.getMeasuredHeight();
-                final int childLeft = (width - childWidth) / 2;
-                final int childTop = (height - childHeight) / 2;
-                view.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
-            }
-
-            if (changed) {
-                mOverlayManager.onSizeChanged(width, height);
-            }
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            int w = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
-            int h = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-            int sizeSpecWidth = widthMeasureSpec;
-            int sizeSpecHeight = heightMeasureSpec;
-
-            final int count = getChildCount();
-            for (int i = 0; i < count; i++) {
-                final View view = getChildAt(i);
-
-                if (view instanceof NMapView) {
-                    if (nMapView.isAutoRotateEnabled()) {
-                        int diag = (((int)(Math.sqrt(w * w + h * h)) + 1) / 2 * 2);
-                        sizeSpecWidth = MeasureSpec.makeMeasureSpec(diag, MeasureSpec.EXACTLY);
-                        sizeSpecHeight = sizeSpecWidth;
-                    }
+        public void onFocusChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+            if (DEBUG) {
+                if (item != null) {
+                    Log.i(LOG_TAG, "onFocusChanged: " + item.toString());
+                } else {
+                    Log.i(LOG_TAG, "onFocusChanged: ");
                 }
-
-                view.measure(sizeSpecWidth, sizeSpecHeight);
             }
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-    }
+    };
 }
