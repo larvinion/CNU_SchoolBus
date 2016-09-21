@@ -27,6 +27,18 @@
             android:name=".MapActivity"
             android:label="MapActivity" >
         </activity>
+        <activity
+            android:name=".ARouteActivity"
+            android:label="ARouteActivity" >
+        </activity>
+        <activity
+            android:name=".BRouteActivity"
+            android:label="BRouteActivity" >
+        </activity>
+        <activity
+            android:name=".CRouteActivity"
+            android:label="CRouteActivity" >
+        </activity>
     </application>
 
 </manifest>

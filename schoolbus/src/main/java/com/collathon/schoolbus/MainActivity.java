@@ -8,8 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button btnA_bus, btnB_bus, btnC_bus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +22,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        setButton();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                */
                 Intent intent = new Intent(getApplicationContext(),
                         MapActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -33,6 +35,42 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    // 메뉴의 버튼에 대한 변수
+    public void setButton(){
+        btnA_bus = (Button) findViewById(R.id.a_bus);
+        btnA_bus.setOnClickListener(clickListener);
+
+        btnB_bus = (Button) findViewById(R.id.b_bus);
+        btnB_bus.setOnClickListener(clickListener);
+
+        btnC_bus = (Button) findViewById(R.id.c_bus);
+        btnC_bus.setOnClickListener(clickListener);
+    }
+
+    OnClickListener clickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(v == btnA_bus){
+                Intent cRouteIntent = new Intent(getApplicationContext(),
+                        ARouteActivity.class);
+                cRouteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(cRouteIntent);
+            }
+            if(v == btnB_bus){
+                Intent bRouteIntent = new Intent(getApplicationContext(),
+                        BRouteActivity.class);
+                bRouteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(bRouteIntent);
+            }
+            if(v == btnC_bus){
+                Intent cRouteIntent = new Intent(getApplicationContext(),
+                        CRouteActivity.class);
+                cRouteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(cRouteIntent);
+            }
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
