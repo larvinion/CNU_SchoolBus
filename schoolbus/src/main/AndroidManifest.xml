@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".ARouteActivity"
-            android:label="ARouteActivity" >
+            android:label="ARouteActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".BRouteActivity"
