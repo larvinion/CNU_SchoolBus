@@ -2,6 +2,7 @@ package com.collathon.schoolbus;
 
 import android.app.Activity;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+=======
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+>>>>>>> e8a1748b976290c0f0cf0356cd020cf46faf61f0
 
 /**
  * Created by ssh91 on 2016-09-21.
@@ -37,11 +49,28 @@ public class ARouteActivity extends Activity implements AdapterView.OnItemClickL
         "⑮정심화국제문화회관"
     };
 
+<<<<<<< HEAD
+=======
+    List<Map<String, String>> groupData = new ArrayList<Map<String, String>>() {{
+        for(int i=0; i<a_routeList.length; i++) {
+            addList(a_routeList.get(i));
+        }
+    }
+
+        private void addList(final String Item, final String subItem) {
+            add(new HashMap<String, String>() {{
+                put(Item, subItem);
+            }});
+        }
+    };
+
+>>>>>>> e8a1748b976290c0f0cf0356cd020cf46faf61f0
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_route);
 
+<<<<<<< HEAD
         ArrayList<HashMap<String, String>> busDatas = new ArrayList<HashMap<String, String>> ();
         HashMap<String, String> busData;
 
@@ -83,6 +112,17 @@ public class ARouteActivity extends Activity implements AdapterView.OnItemClickL
                 return super.onOptionsItemSelected(item);
         }
     }
+=======
+        ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_2, a_routeList);
+
+        ExpaListView list = (ListView)findViewById(R.id.a_buslist);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(this);
+    }
+
+>>>>>>> e8a1748b976290c0f0cf0356cd020cf46faf61f0
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
