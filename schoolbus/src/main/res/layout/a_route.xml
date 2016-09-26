@@ -17,32 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-<<<<<<< HEAD
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:text="A 버스 노선"
             android:textAlignment="center"/>
 
     </android.support.design.widget.AppBarLayout>
 
-=======
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
->>>>>>> e8a1748b976290c0f0cf0356cd020cf46faf61f0
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/a_buslist"
         android:choiceMode="singleChoice"
         tools:listitem="@android:layout/simple_expandable_list_item_2" />
-
-<<<<<<< HEAD
-=======
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" >
-    </ScrollView>
->>>>>>> e8a1748b976290c0f0cf0356cd020cf46faf61f0
+    
 </LinearLayout>
