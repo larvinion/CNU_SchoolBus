@@ -8,12 +8,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/arduino_wifiesp8266" />
             <option value="$PROJECT_DIR$/schoolbus" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/arduino_wifiesp8266" />
             <option value="$PROJECT_DIR$/schoolbus" />
           </set>
         </option>

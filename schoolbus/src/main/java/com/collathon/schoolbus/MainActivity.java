@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v == btnA_bus){
-                Intent cRouteIntent = new Intent(getApplicationContext(),
+                Intent aRouteIntent = new Intent(getApplicationContext(),
                         ARouteActivity.class);
-                cRouteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(cRouteIntent);
+                aRouteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(aRouteIntent);
             }
             if(v == btnB_bus){
                 Intent bRouteIntent = new Intent(getApplicationContext(),
