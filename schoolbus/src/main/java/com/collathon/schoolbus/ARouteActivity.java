@@ -53,7 +53,15 @@ public class ARouteActivity extends Activity implements AdapterView.OnItemClickL
 
         for(int i = 0; i < Arrays.asList(a_routeList).size(); i++){
             // if 버스기사 데이터 베이스 잇으면 이미지 삽입
-            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_map_start), Arrays.asList(a_routeList).get(i), "1");
+            if( i== 3) {
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_map_start), Arrays.asList(a_routeList).get(i), "현재 위치");
+            }else{
+                if(i > 3)
+                    adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_map_blank), Arrays.asList(a_routeList).get(i), i-3+"정거장 전");
+                else{
+                    adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_map_blank), Arrays.asList(a_routeList).get(i), "");
+                }
+            }
             // else 버스기사 데이터 없으면 이미지 X 인 데이터 삽입
         }
 

@@ -79,10 +79,20 @@ public class MapActivity extends NMapActivity {
         int markerId = NMapPOIflagType.PIN;
 
         // set POI data
-        NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
-        poiData.beginPOIdata(2);
-        poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
-        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+        NMapPOIdata poiData = new NMapPOIdata(12, mMapViewerResourceProvider);
+        poiData.beginPOIdata(12);
+        poiData.addPOIitem(127.3452124, 36.3639612, "정심화국제문화회관", markerId, 0);
+        poiData.addPOIitem(127.3457740, 36.3672940, "경상대학앞", markerId, 0);
+        poiData.addPOIitem(127.3467570, 36.3695420, "도서관 앞(농대방향)", markerId, 0);
+        poiData.addPOIitem(127.3462540, 36.3723520, "학생생활관3거리", markerId, 0);
+        poiData.addPOIitem(127.3522070, 36.3667740, "농업생명과학대학앞", markerId, 0);
+        poiData.addPOIitem(127.3465320, 36.3696210, "도서관 앞(도서관 삼거리 방향)", markerId, 0);
+        poiData.addPOIitem(127.3439250, 36.3704950, "예술대학 앞", markerId, 0);
+        poiData.addPOIitem(127.3439260, 36.3742470, "음악 2호관 앞", markerId, 0);
+        poiData.addPOIitem(127.3441170, 36.3765390, "공동동물실험센터 입구(회차)", markerId, 0);
+        poiData.addPOIitem(127.3428990, 36.3716340, "체육관 입구", markerId, 0);
+        poiData.addPOIitem(127.3424790, 36.3670980, "사회과학대학 입구(한누리회관 뒤)", markerId, 0);
+        poiData.addPOIitem(127.3452790, 36.3639690, "정심화국제문화회관", markerId, 0);
         poiData.endPOIdata();
 
         // create POI data overlay
@@ -110,7 +120,7 @@ public class MapActivity extends NMapActivity {
 
     public void onMapInitHandler(NMapView mapView, NMapError errorInfo) {
         if (errorInfo == null) { // success
-            mMapController.setMapCenter(new NGeoPoint(126.978371, 37.5666091), 11);
+            mMapController.setMapCenter(new NGeoPoint(36.3639612, 127.3452124), 5);
         } else { // fail
             android.util.Log.e(LOG_TAG, "onMapInitHandler : error = " + errorInfo.toString());
         }
